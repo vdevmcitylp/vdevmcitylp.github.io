@@ -1,2 +1,107 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Vaasudev's Blog - posts</title><link href="https://vdevmcitylp.github.io/" rel="alternate"></link><link href="https://vdevmcitylp.github.io/feeds/posts.atom.xml" rel="self"></link><id>https://vdevmcitylp.github.io/</id><updated>2019-04-23T11:00:00+05:30</updated><entry><title>Project Timeline</title><link href="https://vdevmcitylp.github.io/project-timeline.html" rel="alternate"></link><published>2019-04-23T11:00:00+05:30</published><updated>2019-04-23T11:00:00+05:30</updated><author><name>Vaasudev Narayanan</name></author><id>tag:vdevmcitylp.github.io,2019-04-23:/project-timeline.html</id><content type="html">&lt;p&gt;Hello World!&lt;/p&gt;</content><category term="posts"></category></entry></feed>
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Vaasudev's Blog - posts</title><link href="http://vdevmcitylp.github.io/" rel="alternate"></link><link href="http://vdevmcitylp.github.io/feeds/posts.atom.xml" rel="self"></link><id>http://vdevmcitylp.github.io/</id><updated>2019-11-07T18:00:00+05:30</updated><entry><title>Deriving the MAML Objective - 1</title><link href="http://vdevmcitylp.github.io/deriving-the-maml-objective-1.html" rel="alternate"></link><published>2019-11-05T16:20:00+05:30</published><updated>2019-11-07T18:00:00+05:30</updated><author><name>Vaasudev Narayanan</name></author><id>tag:vdevmcitylp.github.io,2019-11-05:/deriving-the-maml-objective-1.html</id><summary type="html"></summary><content type="html">&lt;p&gt;In this blog post, we'll be deriving the meta-gradient for the &lt;a href="https://arxiv.org/pdf/1703.03400.pdf"&gt;Model Agnostic Meta Learning (MAML)&lt;/a&gt; objective. &lt;/p&gt;
+&lt;p&gt;&lt;img alt="Supervised MAML" src="http://vdevmcitylp.github.io/images/maml-supervised.png"&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;Fig: Supervised MAML&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;Suppose we have $n$ tasks. Then the &lt;em&gt;meta-update&lt;/em&gt; given by step 10 in above algorithm is defined as,&lt;/p&gt;
+&lt;p&gt;$$
+\begin{equation} \label{eq1}
+    \theta := \theta - \beta \nabla_\theta\sum_{T_{i = 1}}^n L_{T_i}(f_{\theta_i'})
+\end{equation}
+$$&lt;/p&gt;
+&lt;p&gt;Expanding the summation,&lt;/p&gt;
+&lt;p&gt;$$
+\begin{equation} 
+    \begin{split}
+        \nabla_\theta\sum_{T_{i = 1}}^n L_{T_i}(f_{\theta_i'}) &amp;amp; = \nabla_\theta (L_{T_1}(f_{\theta_1'}) + \dots + L_{T_i}(f_{\theta_i'}) + \dots + L_{T_n}(f_{\theta_n'})) \\
+        &amp;amp;= \nabla_\theta L_{T_1}(f_{\theta_1'}) + \dots + \nabla_\theta L_{T_i}(f_{\theta_i'}) + \dots + \nabla_\theta L_{T_n}(f_{\theta_n'})
+    \end{split}
+    \label{eq2}
+\end{equation}
+$$&lt;/p&gt;
+&lt;p&gt;Noting the equivalence of the gradient operator and partial derivative notation,&lt;/p&gt;
+&lt;p&gt;$$
+\begin{equation*}
+    \nabla_\theta L_{T_i}(f_{\theta_i'}) = \frac{\partial L_{T_i}(f_{\theta_i'})}{\partial \theta}
+\end{equation*}
+$$&lt;/p&gt;
+&lt;p&gt;Let us calculate the gradient for the $i^{th}$ task,&lt;/p&gt;
+&lt;p&gt;$$
+\begin{equation} \label{eq3}
+    \frac{\partial L_{T_i}(f_{\theta_i'})}{\partial \theta} = \frac{\partial L_{T_i}(f_{\theta_i'})}{\partial \theta_i'} \cdot
+    \frac{\partial \theta_i'}{\partial \theta}
+\end{equation}
+$$&lt;/p&gt;
+&lt;p&gt;The first term of equation \ref{eq3}, $ \frac{\partial L_{T_i}(f_{\theta_i'})}{\partial \theta_i'} $ is the derivative of the task loss function w.r.t. to the task-adapted parameters, which is relatively straightforward to compute.&lt;/p&gt;
+&lt;p&gt;$$ 
+\begin{equation} \label{eq4}
+    \frac{\partial L_{T_i}(f_{\theta_i'})}{\partial \theta_i'} = \frac{\partial L_{T_i}(f_{\theta_i'})}{\partial f_{\theta_i'}} \cdot \frac{\partial f_{\theta_i'}}{\partial \theta_i'} 
+\end{equation}
+$$&lt;/p&gt;
+&lt;p&gt;The second term of equation \ref{eq3}, $ \frac{\partial \theta_i'}{\partial \theta} $ is the derivative of the task-adapted parameters w.r.t. the meta-parameters.&lt;/p&gt;
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p&gt;To calculate $ \frac{\partial \theta_i'}{\partial \theta} $, we see that&lt;/p&gt;
+&lt;p&gt;$$
+\begin{equation} \label{eq5}
+    \theta_i' = \theta - \alpha \frac{\partial L_{T_i}(f_{\theta})}{\partial \theta}
+\end{equation}
+$$&lt;/p&gt;
+&lt;p&gt;Therefore,&lt;/p&gt;
+&lt;p&gt;$$
+\begin{equation} \label{eq6}
+    \frac{\partial \theta_i}{\partial \theta} = I - \alpha \frac{\partial^2 L_{T_i}(f_{\theta})}{\partial^2 \theta}
+\end{equation}
+$$&lt;/p&gt;
+&lt;p&gt;Expanding the double derivative term $ \frac{\partial^2 L_{T_i}(f_{\theta})}{\partial^2 \theta} $,
+$$
+\begin{equation}
+    \begin{split}
+        \frac{\partial^2 L_{T_i}(f_{\theta})}{\partial^2 \theta} &amp;amp;= \frac{\partial }{\partial \theta}\frac{\partial L_{T_i}(f_{\theta})}{\partial \theta} \\
+        &amp;amp;= \frac{\partial }{\partial \theta}[\frac{\partial L_{T_i}(f_{\theta})}{\partial f_\theta} \cdot \frac{\partial f_\theta}{\partial \theta}] \\
+        &amp;amp;= \frac{\partial L_{T_i}(f_{\theta})}{\partial f_\theta} \cdot \frac{\partial^2 f_\theta}{\partial^2 \theta} + \frac{\partial^2 L_{T_i}(f_{\theta})}{\partial^2 f_\theta} \cdot \frac{\partial f_\theta}{\partial \theta}
+    \end{split}
+    \label{eq7}
+\end{equation}
+$$&lt;/p&gt;
+&lt;p&gt;Plugging $ \frac{\partial^2 L_{T_i}(f_{\theta})}{\partial^2 \theta} $ in equation \ref{eq6}, will give us $ \frac{\partial \theta_i}{\partial \theta} $&lt;/p&gt;
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p&gt;Thus, using equation \ref{eq4}, \ref{eq6} &amp;amp; \ref{eq7} we can now compute the gradient for the $i^{th}$ task w.r.t. the meta-parameters: $ \frac{\partial L_{T_i}(f_{\theta_i'})}{\partial \theta} $ (equation \ref{eq3})&lt;/p&gt;
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p&gt;Calculating the gradient for all the $n$ tasks &amp;amp; summing them up will give us $ \nabla_\theta\sum_{T_{i = 1}}^n L_{T_i}(f_{\theta_i'}) $ (equation \ref{eq2})&lt;/p&gt;
+&lt;p&gt;We can now perform our meta-update,  &lt;/p&gt;
+&lt;p&gt;$$
+\begin{equation*}
+    \theta := \theta - \beta \nabla_\theta\sum_{T_{i = 1}}^n L_{T_i}(f_{\theta_i'})
+\end{equation*}
+$$&lt;/p&gt;
+&lt;p&gt;In the &lt;a href=""&gt;next&lt;/a&gt; post, we will see how the derivation works out for Mean Squared Error (MSE) loss.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;References&lt;/strong&gt;:&lt;/p&gt;
+&lt;p&gt;Chelsea Finn, Pieter Abbeel, and Sergey Levine. &lt;a href="https://arxiv.org/pdf/1703.03400.pdf"&gt;“Model-agnostic meta-learning for fast adaptation of deep networks.”&lt;/a&gt; ICML 2017.&lt;/p&gt;</content><category term="posts"></category></entry><entry><title>It's a process.</title><link href="http://vdevmcitylp.github.io/its-a-process.html" rel="alternate"></link><published>2019-10-21T11:00:00+05:30</published><updated>2019-04-21T11:00:00+05:30</updated><author><name>Vaasudev Narayanan</name></author><id>tag:vdevmcitylp.github.io,2019-10-21:/its-a-process.html</id><summary type="html">&lt;p&gt;My thoughts about research.&lt;/p&gt;</summary><content type="html">&lt;p&gt;For as long as I can remember, I’ve wanted to be a scientist. It’s only in the past few years though that I’ve started to understand what it truly means to be a scientist and how much I enjoy being one!&lt;/p&gt;
+&lt;p&gt;I’ve worked in a few academic &amp;amp; industrial labs doing research in machine learning &amp;amp; its applications. I’ve had the fortune of being advised by brilliant researchers and the majority of the things that I’ve learnt, I would attribute it to them.&lt;/p&gt;
+&lt;p&gt;I thought I’d write up a blog post and share some things that I’ve learnt along the way.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Note&lt;/strong&gt;: I’m relatively a young researcher and have been involved in machine learning research for about two years now.&lt;/p&gt;
+&lt;p&gt;So with that out of the way, here’s a list of things I wish I had known when I was just starting out my career in research.&lt;br&gt;
+&lt;br /&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Skepticism&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;Yes, I’d like to start on a positive note by telling you to be a pessimist and not to trust anything blindly. It is important to question everything that you come across, now more so than ever where the field is moving so fast with a deluge of papers being published everyday. When you read a paper, ask whether they’ve followed the proper scientific method, ask whether the underlying assumptions that the paper uses are valid and whether the experimental results support what the authors originally set out to show.&lt;/p&gt;
+&lt;p&gt;With regard to your own experiments, be highly skeptical of whatever results you get. Try to come up with alternative explanations for your results and systematically rule them out one by one. Conduct proper ablation studies to ascertain that you can establish a correlation between your hypothesis and your result.
+I know it feels good when the results support your hypothesis, but by considering alternative explanations you can be more confident about your work.  &lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Simplicity&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;Start with simple experiments. It is very tempting to conjure up a complicated model and hope that it will produce state-of-the-art results for your task on the first shot. Unfortunately, that happens rarely.&lt;/p&gt;
+&lt;p&gt;Perform simple experiments first, establish proper baselines and then move forward accordingly. [Unless you are an absolute genius and know what you’re doing, go ahead with whatever feels right for you. This advice is for plebeians like me.]  &lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Literature Review&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;There is a good chance that prior attempts have been made to tackle the problem that you’re trying to solve. You can save a lot of time and effort by studying approaches that have been taken in the past for your problem. By understanding where they worked and where they did not work, you can avoid making the same mistakes. Unless you have good reason to suspect prior research, avoid reinventing the wheel.  &lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Asking for Help&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;At times, you might lose track of the overall goal of your project and feel like you’re stuck in a rut. Consider asking someone else to have a look at your work. It is easier for an outsider to have a bird’s eye view of your project and provide fresh insights.&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;Make it easy for people to help you.&lt;/em&gt; Provide them with a short presentation or a write-up summarizing your work instead of dumping all your rough notes and code on them. They will appreciate the effort and will possibly go out of their way to help you.&lt;/p&gt;
+&lt;p&gt;Conversely, make a genuine effort when people ask you for help. You can always say no if you feel they aren’t respecting your time and effort.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Research can get frustrating and at times you might feel the universe is against you. But don’t forget that &lt;a href="https://youtu.be/642kB411kRc"&gt;it’s a process&lt;/a&gt;!&lt;/p&gt;</content><category term="posts"></category></entry></feed>
