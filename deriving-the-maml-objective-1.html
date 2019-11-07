@@ -1,0 +1,188 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+  <head>
+    <title>Deriving the MAML Objective - 1 - Vaasudev's Blog</title>
+    <meta charset="utf-8" />
+    <link href="http://fonts.googleapis.com/css?family=Arimo:400,700|Inika" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="./theme/bootstrap.css" />
+    <link rel="stylesheet" type="text/css" href="./theme/pastie.css" />
+    <link href="http://vdevmcitylp.github.io/" type="application/atom+xml" rel="alternate" title="Vaasudev's Blog Atom Feed" />
+
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+      extensions: ["tex2jax.js"],
+        jax: ["input/TeX", "output/HTML-CSS"],
+        tex2jax: {
+          inlineMath: [[ '$','$']],
+          displayMath:  [['$$','$$']],
+          processEscapes: true
+        },
+        "HTML-CSS": { availableFonts: ["TeX"] }
+      });
+    </script> 
+
+    <script type="text/javascript"          
+      src="http://cdn.mathjax.org/mathjax/latest/MathJax.js">
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+      TeX: { equationNumbers: { autoNumber: "AMS" } }
+      });
+    </script>
+
+  </head>
+
+  <body>
+    <div class="container">
+      <div class="row">
+        <div class="span8">
+<div id="content">
+    <div class="header">
+        <h1>Deriving the MAML Objective - 1</h1>
+    </div>
+    <p class="meta"><small><span><a href="./author/vaasudev-narayanan/">Vaasudev Narayanan</a> - </span><span>Tue 05 November 2019</span> - <span class="tags"></span></small></p>
+        <div class="entry-content">
+        <p>In this blog post, we'll be deriving the meta-gradient for the <a href="https://arxiv.org/pdf/1703.03400.pdf">Model Agnostic Meta Learning (MAML)</a> objective. </p>
+<p><img alt="Supervised MAML" src="./images/maml-supervised.png"></p>
+<p><em>Fig: Supervised MAML</em></p>
+<p>Suppose we have $n$ tasks. Then the <em>meta-update</em> given by step 10 in above algorithm is defined as,</p>
+<p>$$
+\begin{equation} \label{eq1}
+    \theta := \theta - \beta \nabla_\theta\sum_{T_{i = 1}}^n L_{T_i}(f_{\theta_i'})
+\end{equation}
+$$</p>
+<p>Expanding the summation,</p>
+<p>$$
+\begin{equation} 
+    \begin{split}
+        \nabla_\theta\sum_{T_{i = 1}}^n L_{T_i}(f_{\theta_i'}) &amp; = \nabla_\theta (L_{T_1}(f_{\theta_1'}) + \dots + L_{T_i}(f_{\theta_i'}) + \dots + L_{T_n}(f_{\theta_n'})) \\
+        &amp;= \nabla_\theta L_{T_1}(f_{\theta_1'}) + \dots + \nabla_\theta L_{T_i}(f_{\theta_i'}) + \dots + \nabla_\theta L_{T_n}(f_{\theta_n'})
+    \end{split}
+    \label{eq2}
+\end{equation}
+$$</p>
+<p>Noting the equivalence of the gradient operator and partial derivative notation,</p>
+<p>$$
+\begin{equation*}
+    \nabla_\theta L_{T_i}(f_{\theta_i'}) = \frac{\partial L_{T_i}(f_{\theta_i'})}{\partial \theta}
+\end{equation*}
+$$</p>
+<p>Let us calculate the gradient for the $i^{th}$ task,</p>
+<p>$$
+\begin{equation} \label{eq3}
+    \frac{\partial L_{T_i}(f_{\theta_i'})}{\partial \theta} = \frac{\partial L_{T_i}(f_{\theta_i'})}{\partial \theta_i'} \cdot
+    \frac{\partial \theta_i'}{\partial \theta}
+\end{equation}
+$$</p>
+<p>The first term of equation \ref{eq3}, $ \frac{\partial L_{T_i}(f_{\theta_i'})}{\partial \theta_i'} $ is the derivative of the task loss function w.r.t. to the task-adapted parameters, which is relatively straightforward to compute.</p>
+<p>$$ 
+\begin{equation} \label{eq4}
+    \frac{\partial L_{T_i}(f_{\theta_i'})}{\partial \theta_i'} = \frac{\partial L_{T_i}(f_{\theta_i'})}{\partial f_{\theta_i'}} \cdot \frac{\partial f_{\theta_i'}}{\partial \theta_i'} 
+\end{equation}
+$$</p>
+<p>The second term of equation \ref{eq3}, $ \frac{\partial \theta_i'}{\partial \theta} $ is the derivative of the task-adapted parameters w.r.t. the meta-parameters.</p>
+<p><br /></p>
+<p>To calculate $ \frac{\partial \theta_i'}{\partial \theta} $, we see that</p>
+<p>$$
+\begin{equation} \label{eq5}
+    \theta_i' = \theta - \alpha \frac{\partial L_{T_i}(f_{\theta})}{\partial \theta}
+\end{equation}
+$$</p>
+<p>Therefore,</p>
+<p>$$
+\begin{equation} \label{eq6}
+    \frac{\partial \theta_i}{\partial \theta} = I - \alpha \frac{\partial^2 L_{T_i}(f_{\theta})}{\partial^2 \theta}
+\end{equation}
+$$</p>
+<p>Expanding the double derivative term $ \frac{\partial^2 L_{T_i}(f_{\theta})}{\partial^2 \theta} $,
+$$
+\begin{equation}
+    \begin{split}
+        \frac{\partial^2 L_{T_i}(f_{\theta})}{\partial^2 \theta} &amp;= \frac{\partial }{\partial \theta}\frac{\partial L_{T_i}(f_{\theta})}{\partial \theta} \\
+        &amp;= \frac{\partial }{\partial \theta}[\frac{\partial L_{T_i}(f_{\theta})}{\partial f_\theta} \cdot \frac{\partial f_\theta}{\partial \theta}] \\
+        &amp;= \frac{\partial L_{T_i}(f_{\theta})}{\partial f_\theta} \cdot \frac{\partial^2 f_\theta}{\partial^2 \theta} + \frac{\partial^2 L_{T_i}(f_{\theta})}{\partial^2 f_\theta} \cdot \frac{\partial f_\theta}{\partial \theta}
+    \end{split}
+    \label{eq7}
+\end{equation}
+$$</p>
+<p>Plugging $ \frac{\partial^2 L_{T_i}(f_{\theta})}{\partial^2 \theta} $ in equation \ref{eq6}, will give us $ \frac{\partial \theta_i}{\partial \theta} $</p>
+<p><br /></p>
+<p>Thus, using equation \ref{eq4}, \ref{eq6} &amp; \ref{eq7} we can now compute the gradient for the $i^{th}$ task w.r.t. the meta-parameters: $ \frac{\partial L_{T_i}(f_{\theta_i'})}{\partial \theta} $ (equation \ref{eq3})</p>
+<p><br /></p>
+<p>Calculating the gradient for all the $n$ tasks &amp; summing them up will give us $ \nabla_\theta\sum_{T_{i = 1}}^n L_{T_i}(f_{\theta_i'}) $ (equation \ref{eq2})</p>
+<p>We can now perform our meta-update,  </p>
+<p>$$
+\begin{equation*}
+    \theta := \theta - \beta \nabla_\theta\sum_{T_{i = 1}}^n L_{T_i}(f_{\theta_i'})
+\end{equation*}
+$$</p>
+<p>In the <a href="">next</a> post, we will see how the derivation works out for Mean Squared Error (MSE) loss.</p>
+<p><strong>References</strong>:</p>
+<p>Chelsea Finn, Pieter Abbeel, and Sergey Levine. <a href="https://arxiv.org/pdf/1703.03400.pdf">“Model-agnostic meta-learning for fast adaptation of deep networks.”</a> ICML 2017.</p>
+        </div><!-- /.entry-content -->
+        <div id="disqus_thread"></div>
+        <script type="text/javascript">
+            /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+            var disqus_shortname = 'vdevmcitylp'; // required: replace example with your forum shortname
+
+            /* * * DON'T EDIT BELOW THIS LINE * * */
+            (function() {
+                var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+                dsq.src = 'https://' + disqus_shortname + '.disqus.com/embed.js';
+                (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+            })();
+        </script>
+        <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+        </div>
+        <div class="span3 offset1">
+          <div class="well">
+            <ul class="nav nav-list">
+              <li class="nav-header">Blog</li>
+              <li ><a href="./index.html">Home</a></li>
+              <!-- <li ><a href="./tags/">Tags</a></li> -->
+              <!-- <li ><a href="./archives/">Archiv</a></li> -->
+              <li class="nav-header">Pages</li>
+              <li><a href="./pages/about.html">About Me</a></li>
+              <li><a href="./pages/publications.html">Publications</a></li>
+              <li><a href="./pages/internships.html">Internships</a></li>
+              <li class="nav-header">Links</li>
+              <li><a href="https://drive.google.com/open?id=1SjP2Y6FXU9hyiwQ053Iv3BOwEmmIiU3k">CV</a></li>
+              <li><a href="https://scholar.google.co.in/citations?user=ncXa5P0AAAAJ&hl=en">Google Scholar</a></li>
+              <li><a href="https://github.com/vdevmcitylp">Github</a></li>
+              <li><a href="https://www.linkedin.com/in/vaasudev-narayanan-659b6010b/">LinkedIn</a></li>
+              <li><a href="https://twitter.com/VDev_AGI">Twitter</a></li>
+            </ul>
+          </div><!-- /#menu -->
+        </div>
+      </div>
+
+      <hr />
+
+     <!--  <div class="row">
+        <div class="span12">
+          <div id="about">
+            <p>Proudly powered by <a href="http://twitter.github.com/bootstrap/">bootstrap</a>, <a href="http://docs.notmyidea.org/alexis/pelican/">pelican</a>, <a href="http://python.org">python</a> and <a href="http://www.julo.ch/about/">Alex</a>!</p>
+          </div><!-- /#about -->
+        <!--</div> /#contentinfo 
+      </div>
+    </div> -->
+
+    <script type="text/javascript">
+        /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+        var disqus_shortname = 'vdevmcitylp'; // required: replace example with your forum shortname
+
+        /* * * DON'T EDIT BELOW THIS LINE * * */
+        (function () {
+            var s = document.createElement('script'); s.async = true;
+            s.type = 'text/javascript';
+            s.src = 'http://' + disqus_shortname + '.disqus.com/count.js';
+            (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+        }());
+    </script>
+
+  </body>
+</html>
