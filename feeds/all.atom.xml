@@ -1,5 +1,133 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Vaasudev's Blog</title><link href="https://vdevmcitylp.github.io/" rel="alternate"></link><link href="https://vdevmcitylp.github.io/feeds/all.atom.xml" rel="self"></link><id>https://vdevmcitylp.github.io/</id><updated>2019-11-07T18:00:00+05:30</updated><entry><title>Deriving the MAML Objective - 1</title><link href="https://vdevmcitylp.github.io/deriving-the-maml-objective-1.html" rel="alternate"></link><published>2019-11-05T16:20:00+05:30</published><updated>2019-11-07T18:00:00+05:30</updated><author><name>Vaasudev Narayanan</name></author><id>tag:vdevmcitylp.github.io,2019-11-05:/deriving-the-maml-objective-1.html</id><summary type="html"></summary><content type="html">&lt;p&gt;In this blog post, we'll be deriving the meta-gradient for the &lt;a href="https://arxiv.org/pdf/1703.03400.pdf"&gt;Model Agnostic Meta Learning (MAML)&lt;/a&gt; objective. &lt;/p&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Vaasudev's Blog</title><link href="https://vdevmcitylp.github.io/" rel="alternate"></link><link href="https://vdevmcitylp.github.io/feeds/all.atom.xml" rel="self"></link><id>https://vdevmcitylp.github.io/</id><updated>2019-11-08T09:50:00+05:30</updated><entry><title>Deriving the MAML Objective - 2</title><link href="https://vdevmcitylp.github.io/deriving-the-maml-objective-2.html" rel="alternate"></link><published>2019-11-08T09:50:00+05:30</published><updated>2019-11-08T09:50:00+05:30</updated><author><name>Vaasudev Narayanan</name></author><id>tag:vdevmcitylp.github.io,2019-11-08:/deriving-the-maml-objective-2.html</id><summary type="html">&lt;p&gt;Mean Squared Error&lt;/p&gt;</summary><content type="html">&lt;p&gt;In this post, we'll be deriving the meta-gradient of the &lt;a href="https://arxiv.org/pdf/1703.03400.pdf"&gt;MAML&lt;/a&gt; objective for the &lt;em&gt;Mean Squared Error (MSE)&lt;/em&gt; loss. &lt;br /&gt;
+This is a follow-up to &lt;a href="https://vdevmcitylp.github.io/deriving-the-maml-objective-1.html"&gt;Deriving the MAML Objective - 1.&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;In our setup, we have $n$ tasks and the meta-update is defined as,&lt;/p&gt;
+&lt;p&gt;$$
+\begin{equation} \label{eq1}
+    \theta := \theta - \beta \nabla_\theta\sum_{T_{i = 1}}^n L_{T_i}(f_{\theta_i'})
+\end{equation}
+$$&lt;/p&gt;
+&lt;p&gt;We are interested in calculating $ \nabla_\theta\sum_{T_{i = 1}}^n L_{T_i}(f_{\theta_i'}) $ where $L$ is the mean-squared error defined as,
+$ \newcommand{\norm}[1]{\left\lVert #1 \right\rVert} $
+$$
+\begin{equation} \label{eq2}
+    L_{T_i}(f_{\theta_i'}) = \frac{1}{2} \sum_{j = 1}^K \norm{f_{\theta_i'}(x^{(j)}) - y^{(j)}}_{2}^{2}
+\end{equation}
+$$&lt;/p&gt;
+&lt;p&gt;We will consider the simpler case of a single-output regression task. So, &lt;/p&gt;
+&lt;p&gt;$$
+\begin{equation} \label{eq3}
+    L_{T_i}(f_{\theta_i'}) = \frac{1}{2} \sum_{j = 1}^K (f_{\theta_i'}(x^{(j)}) - y^{(j)})^{2}
+\end{equation}
+$$&lt;/p&gt;
+&lt;p&gt;The gradient for the $ i^{th} $ task is defined as,&lt;/p&gt;
+&lt;p&gt;$$
+\begin{equation} \label{eq4}
+    \frac{\partial L_{T_i}(f_{\theta_i'})}{\partial \theta} = \frac{\partial L_{T_i}(f_{\theta_i'})}{\partial \theta_i'} \cdot
+    \frac{\partial \theta_i'}{\partial \theta}
+\end{equation}
+$$&lt;/p&gt;
+&lt;p&gt;The first term of equation \ref{eq4}, $ \frac{\partial L_{T_i}(f_{\theta_i'})}{\partial \theta_i'} $ is the derivative of the task loss function w.r.t. to the task-adapted parameters,&lt;/p&gt;
+&lt;p&gt;$$ 
+\begin{equation}
+    \begin{split}
+        \frac{\partial L_{T_i}(f_{\theta_i'})}{\partial \theta_i'} &amp;amp;= \frac{\partial L_{T_i}(f_{\theta_i'})}{\partial f_{\theta_i'}} \cdot \frac{\partial f_{\theta_i'}}{\partial \theta_i'} \\
+        &amp;amp;= \sum_{k = 1}^K (f_{\theta_i'}(x^{(k)}) - y^{(k)}) \cdot \frac{\partial f_{\theta_i'}}{\partial \theta_i'} (x^{(k)})
+    \end{split}
+    \label{eq5}
+\end{equation}
+$$&lt;/p&gt;
+&lt;p&gt;K is the number of data-points for a task in a K-shot setting.
+&lt;br /&gt;&lt;/p&gt;
+&lt;p&gt;The second term of equation \ref{eq3}, $ \frac{\partial \theta_i'}{\partial \theta} $ is the derivative of the task-adapted parameters w.r.t. the meta-parameters.&lt;/p&gt;
+&lt;p&gt;To calculate $ \frac{\partial \theta_i'}{\partial \theta} $, let us assume that $ \theta_i' $ and $ \theta $ are both (D+1)-dimensional vectors,&lt;/p&gt;
+&lt;p&gt;$$
+\begin{equation}
+    \begin{split}
+        &amp;amp;\theta_i' = [\theta_{i0}', \theta_{i1}', \dots, \theta_{iD}'] \\
+        &amp;amp;\theta = [\theta_0, \theta_1, \dots, \theta_D]
+    \end{split}
+    \label{eq6}
+\end{equation}
+$$&lt;/p&gt;
+&lt;p&gt;Then the Jacobian is defined as,&lt;/p&gt;
+&lt;p&gt;$$
+\begin{equation} \label{eq7}
+    \frac{\partial \theta_i'}{\partial \theta} = 
+    \begin{bmatrix}
+        \frac{\partial \theta_{i0}'}{\partial \theta_0} &amp;amp; \frac{\partial \theta_{i0}'}{\partial \theta_1} &amp;amp; \dots &amp;amp; \frac{\partial \theta_{i0}'}{\partial \theta_D} \\
+        \frac{\partial \theta_{i1}'}{\partial \theta_0} &amp;amp; \frac{\partial \theta_{i1}'}{\partial \theta_1} &amp;amp; \dots &amp;amp; \frac{\partial \theta_{i1}'}{\partial \theta_D} \\
+        \vdots &amp;amp; \vdots &amp;amp; \ddots &amp;amp; \vdots \\
+        \frac{\partial \theta_{iD}'}{\partial \theta_0} &amp;amp; \frac{\partial \theta_{iD}'}{\partial \theta_1} &amp;amp; \dots &amp;amp; \frac{\partial \theta_{iD}'}{\partial \theta_D}
+    \end{bmatrix}
+\end{equation}
+$$&lt;/p&gt;
+&lt;p&gt;By definition, &lt;/p&gt;
+&lt;p&gt;$$
+\begin{equation} \label{eq8}
+    \theta_{ij}' = \theta_j - \alpha \frac{\partial L_{T_i}(\theta)}{\partial \theta_j}
+\end{equation}
+$$&lt;/p&gt;
+&lt;p&gt;Calculating a few terms of the Jacobian,
+$$
+\begin{equation*}
+    \frac{\partial \theta_{i0}'}{\partial \theta_0} = 1 - \alpha \frac{\partial^2 L_{T_i}(\theta)}{\partial^2 \theta_0} \\
+    \frac{\partial \theta_{i0}'}{\partial \theta_1} = -\alpha \frac{\partial^2 L_{T_i}(\theta)}{\partial \theta_0 \partial \theta_1}
+\end{equation*}
+$$&lt;/p&gt;
+&lt;p&gt;Generalizing,&lt;/p&gt;
+&lt;p&gt;$$
+\begin{equation} \label{eq9}
+    \frac{\partial \theta_{ip}'}{\partial \theta_q} = 
+    \begin{cases}
+        1 - \alpha \frac{\partial^2 L_{T_i}(\theta)}{\partial^2 \theta_q}, &amp;amp; \text{if } p = q \\
+        -\alpha \frac{\partial^2 L_{T_i}(\theta)}{\partial \theta_p \partial \theta_q}, &amp;amp; {p \neq q}
+    \end{cases}
+\end{equation}
+$$
+&lt;!-- Double Derivative start --&gt;
+&lt;br /&gt;
+Let us calculate the double derivative term $ \frac{\partial^2 L_{T_i}(f_{\theta})}{\partial^2 \theta} $,&lt;/p&gt;
+&lt;p&gt;$$
+\begin{equation} \label{eq10}
+    \frac{\partial^2 L_{T_i}(f_{\theta})}{\partial^2 \theta} = 
+    \begin{bmatrix}
+        \frac{\partial^2 L_{T_i}(f_{\theta})}{\partial^2 \theta_0} &amp;amp; \frac{\partial^2 L_{T_i}(f_{\theta})}{\partial \theta_0 \partial \theta_1} &amp;amp; \dots &amp;amp; \frac{\partial^2 L_{T_i}(f_{\theta})}{\partial \theta_0 \partial \theta_D} \\
+        \frac{\partial^2 L_{T_i}(f_{\theta})}{\partial \theta_1 \partial \theta_0} &amp;amp; \frac{\partial^2 L_{T_i}(f_{\theta})}{\partial^2 \theta_1} &amp;amp; \dots &amp;amp; \frac{\partial^2 L_{T_i}(f_{\theta})}{\partial \theta_1 \partial \theta_D} \\
+        \vdots &amp;amp; \vdots &amp;amp; \ddots &amp;amp; \vdots \\
+        \frac{\partial^2 L_{T_i}(f_{\theta})}{\partial \theta_D \partial \theta_0} &amp;amp; \frac{\partial^2 L_{T_i}(f_{\theta})}{\partial \theta_D \partial \theta_1} &amp;amp; \dots &amp;amp; \frac{\partial^2 L_{T_i}(f_{\theta})}{\partial^2 \theta_D}
+    \end{bmatrix}
+\end{equation}
+$$&lt;/p&gt;
+&lt;p&gt;Thus, 
+$$
+\begin{equation} \label{eq11}
+    \frac{\partial L_{T_i}(\theta)}{\partial \theta_q} = \sum_{j = 1}^K (f_\theta (x^{(j)}) - y^{(j)}) \cdot \frac{\partial f_{\theta}}{\partial \theta_q} (x^{(j)})
+\end{equation}
+$$&lt;/p&gt;
+&lt;p&gt;$$
+\begin{equation} \label{eq12}
+    \frac{\partial^2 L_{T_i}(\theta)}{\partial \theta_p \partial \theta_q} = \sum_{j = 1}^K [(f_\theta (x^{(j)}) - y^{(j)}) \cdot \frac{\partial^2 f_{\theta}}{\partial \theta_p \partial \theta_q} (x^{(j)}) + \frac{\partial f_{\theta}}{\partial \theta_p} (x^{(j)}) \cdot \frac{\partial f_{\theta}}{\partial \theta_q} (x^{(j)})]
+\end{equation}
+$$&lt;/p&gt;
+&lt;!-- Double Derivative end --&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p&gt;Therefore, using equation \ref{eq5}, \ref{eq8} &amp;amp; \ref{eq12} we can now compute the gradient for the $i^{th}$ task w.r.t. the meta-parameters: $ \frac{\partial L_{T_i}(f_{\theta_i'})}{\partial \theta} $ (equation \ref{eq4})&lt;/p&gt;
+&lt;p&gt;$$
+\begin{equation} \label{eq13}
+    \frac{\partial L_{T_i}(f_{\theta_i'})}{\partial \theta} = \sum_{k = 1}^K (f_{\theta_i'}(x^{(k)}) - y^{(k)}) \cdot \frac{\partial f_{\theta_i'}}{\partial \theta_i'} (x^{(k)}) \cdot \frac{\partial \theta_i'}{\partial \theta}
+\end{equation}
+$$&lt;/p&gt;
+&lt;p&gt;Calculating the gradient for all the $n$ tasks &amp;amp; summing them up will give us $ \nabla_\theta\sum_{T_{i = 1}}^n L_{T_i}(f_{\theta_i'}) $ (equation \ref{eq2})&lt;/p&gt;
+&lt;p&gt;We can now perform our meta-update,  &lt;/p&gt;
+&lt;p&gt;$$
+\begin{equation*}
+    \theta := \theta - \beta \nabla_\theta\sum_{T_{i = 1}}^n L_{T_i}(f_{\theta_i'})
+\end{equation*}
+$$&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;References&lt;/strong&gt;:&lt;/p&gt;
+&lt;p&gt;Chelsea Finn, Pieter Abbeel, and Sergey Levine. &lt;a href="https://arxiv.org/pdf/1703.03400.pdf"&gt;“Model-agnostic meta-learning for fast adaptation of deep networks.”&lt;/a&gt; ICML 2017.&lt;/p&gt;</content><category term="posts"></category></entry><entry><title>Deriving the MAML Objective - 1</title><link href="https://vdevmcitylp.github.io/deriving-the-maml-objective-1.html" rel="alternate"></link><published>2019-11-05T16:20:00+05:30</published><updated>2019-11-07T18:00:00+05:30</updated><author><name>Vaasudev Narayanan</name></author><id>tag:vdevmcitylp.github.io,2019-11-05:/deriving-the-maml-objective-1.html</id><summary type="html"></summary><content type="html">&lt;p&gt;In this blog post, we'll be deriving the meta-gradient for the &lt;a href="https://arxiv.org/pdf/1703.03400.pdf"&gt;Model Agnostic Meta Learning (MAML)&lt;/a&gt; objective. &lt;/p&gt;
 &lt;p&gt;&lt;img alt="Supervised MAML" src="https://vdevmcitylp.github.io/images/maml-supervised.png"&gt;&lt;/p&gt;
 &lt;p&gt;&lt;em&gt;Fig: Supervised MAML&lt;/em&gt;&lt;/p&gt;
 &lt;p&gt;Suppose we have $n$ tasks. Then the &lt;em&gt;meta-update&lt;/em&gt; given by step 10 in above algorithm is defined as,&lt;/p&gt;
@@ -57,7 +185,7 @@ $$
     \begin{split}
         \frac{\partial^2 L_{T_i}(f_{\theta})}{\partial^2 \theta} &amp;amp;= \frac{\partial }{\partial \theta}\frac{\partial L_{T_i}(f_{\theta})}{\partial \theta} \\
         &amp;amp;= \frac{\partial }{\partial \theta}[\frac{\partial L_{T_i}(f_{\theta})}{\partial f_\theta} \cdot \frac{\partial f_\theta}{\partial \theta}] \\
-        &amp;amp;= \frac{\partial L_{T_i}(f_{\theta})}{\partial f_\theta} \cdot \frac{\partial^2 f_\theta}{\partial^2 \theta} + \frac{\partial^2 L_{T_i}(f_{\theta})}{\partial^2 f_\theta} \cdot \frac{\partial f_\theta}{\partial \theta}
+        &amp;amp;= \frac{\partial L_{T_i}(f_{\theta})}{\partial f_\theta} \cdot \frac{\partial^2 f_\theta}{\partial^2 \theta} + \frac{\partial^2 L_{T_i}(f_{\theta})}{\partial^2 f_\theta} \cdot (\frac{\partial f_\theta}{\partial \theta})^2
     \end{split}
     \label{eq7}
 \end{equation}
@@ -73,7 +201,7 @@ $$&lt;/p&gt;
     \theta := \theta - \beta \nabla_\theta\sum_{T_{i = 1}}^n L_{T_i}(f_{\theta_i'})
 \end{equation*}
 $$&lt;/p&gt;
-&lt;p&gt;In the &lt;a href=""&gt;next&lt;/a&gt; post, we will see how the derivation works out for Mean Squared Error (MSE) loss.&lt;/p&gt;
+&lt;p&gt;In the &lt;a href="https://vdevmcitylp.github.io/deriving-the-maml-objective-2.html"&gt;next&lt;/a&gt; post, we will see how the derivation works out for Mean Squared Error (MSE) loss.&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;References&lt;/strong&gt;:&lt;/p&gt;
 &lt;p&gt;Chelsea Finn, Pieter Abbeel, and Sergey Levine. &lt;a href="https://arxiv.org/pdf/1703.03400.pdf"&gt;“Model-agnostic meta-learning for fast adaptation of deep networks.”&lt;/a&gt; ICML 2017.&lt;/p&gt;</content><category term="posts"></category></entry><entry><title>It's a process.</title><link href="https://vdevmcitylp.github.io/its-a-process.html" rel="alternate"></link><published>2019-10-21T11:00:00+05:30</published><updated>2019-04-21T11:00:00+05:30</updated><author><name>Vaasudev Narayanan</name></author><id>tag:vdevmcitylp.github.io,2019-10-21:/its-a-process.html</id><summary type="html">&lt;p&gt;My thoughts about research.&lt;/p&gt;</summary><content type="html">&lt;p&gt;For as long as I can remember, I’ve wanted to be a scientist. It’s only in the past few years though that I’ve started to understand what it truly means to be a scientist and how much I enjoy being one!&lt;/p&gt;
 &lt;p&gt;I’ve worked in a few academic &amp;amp; industrial labs doing research in machine learning &amp;amp; its applications. I’ve had the fortune of being advised by brilliant researchers and the majority of the things that I’ve learnt, I would attribute it to them.&lt;/p&gt;

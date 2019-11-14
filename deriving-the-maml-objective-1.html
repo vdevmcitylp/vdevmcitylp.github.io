@@ -103,7 +103,7 @@ $$
     \begin{split}
         \frac{\partial^2 L_{T_i}(f_{\theta})}{\partial^2 \theta} &amp;= \frac{\partial }{\partial \theta}\frac{\partial L_{T_i}(f_{\theta})}{\partial \theta} \\
         &amp;= \frac{\partial }{\partial \theta}[\frac{\partial L_{T_i}(f_{\theta})}{\partial f_\theta} \cdot \frac{\partial f_\theta}{\partial \theta}] \\
-        &amp;= \frac{\partial L_{T_i}(f_{\theta})}{\partial f_\theta} \cdot \frac{\partial^2 f_\theta}{\partial^2 \theta} + \frac{\partial^2 L_{T_i}(f_{\theta})}{\partial^2 f_\theta} \cdot \frac{\partial f_\theta}{\partial \theta}
+        &amp;= \frac{\partial L_{T_i}(f_{\theta})}{\partial f_\theta} \cdot \frac{\partial^2 f_\theta}{\partial^2 \theta} + \frac{\partial^2 L_{T_i}(f_{\theta})}{\partial^2 f_\theta} \cdot (\frac{\partial f_\theta}{\partial \theta})^2
     \end{split}
     \label{eq7}
 \end{equation}
@@ -119,7 +119,7 @@ $$</p>
     \theta := \theta - \beta \nabla_\theta\sum_{T_{i = 1}}^n L_{T_i}(f_{\theta_i'})
 \end{equation*}
 $$</p>
-<p>In the <a href="">next</a> post, we will see how the derivation works out for Mean Squared Error (MSE) loss.</p>
+<p>In the <a href="./deriving-the-maml-objective-2.html">next</a> post, we will see how the derivation works out for Mean Squared Error (MSE) loss.</p>
 <p><strong>References</strong>:</p>
 <p>Chelsea Finn, Pieter Abbeel, and Sergey Levine. <a href="https://arxiv.org/pdf/1703.03400.pdf">“Model-agnostic meta-learning for fast adaptation of deep networks.”</a> ICML 2017.</p>
         </div><!-- /.entry-content -->
