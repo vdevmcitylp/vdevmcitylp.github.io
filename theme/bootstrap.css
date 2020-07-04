@@ -134,7 +134,7 @@ textarea {
 body {
   margin: 0;
   margin-top: 40px;
-  font-family: "Arimo", sans-serif;
+  font-family: "Comic Neue", sans-serif;
   font-size: 18px;
   line-height: 23px;
   color: #333333;
@@ -324,7 +324,7 @@ a:hover {
 }
 p {
   margin: 0 0 11.5px;
-  font-family: "Arimo", sans-serif;
+  font-family: "Comic Neue", sans-serif;
   font-size: 18px;
   line-height: 23px;
 }
@@ -345,7 +345,7 @@ h4,
 h5,
 h6 {
   margin: 0;
-  font-family: 'Inika', serif;
+  font-family: 'Comic Neue', serif;
   font-weight: bold;
   color: inherit;
   text-rendering: optimizelegibility;
@@ -909,7 +909,7 @@ input,
 button,
 select,
 textarea {
-  font-family: "Arimo", sans-serif;
+  font-family: "Comic Neue", sans-serif;
 }
 label {
   display: block;
