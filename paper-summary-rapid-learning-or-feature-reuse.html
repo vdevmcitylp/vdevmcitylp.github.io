@@ -7,7 +7,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Comic+Neue&display=swap" rel="stylesheet" type="text/css" />
     <link rel="stylesheet" type="text/css" href="./theme/bootstrap.css" />
     <link rel="stylesheet" type="text/css" href="./theme/pastie.css" />
-    <link href="./" type="application/atom+xml" rel="alternate" title="Vaasudev's Blog Atom Feed" />
+    <link href="https://vdevmcitylp.github.io/" type="application/atom+xml" rel="alternate" title="Vaasudev's Blog Atom Feed" />
 
 
     <script type="text/x-mathjax-config">
@@ -55,7 +55,7 @@
 <ul>
 <li><strong>Feature Reuse</strong>: Is the learnt meta-initialization already at a point in the feature space which is close to the optimum for a new task at meta-test time?</li>
 </ul>
-<p><img alt="rapidvsreuse" src="images/rapidvsreuse.png"></p>
+<p><img alt="rapidvsreuse" src="./images/rapidvsreuse.png"></p>
 <p><strong>Conclusion</strong></p>
 <p>They conclude that feature reuse is the dominant factor and propose two modifications to MAML - Almost No Inner Loop (ANIL) &amp; No Inner Loop (NIL).</p>
 <p><strong>Experiments</strong></p>
@@ -65,13 +65,13 @@
 <li>Contiguous subsets of the layers in the body of the network are frozen during the inner loop at <em>meta-test</em> time.</li>
 <li>The inner loop adaptation is still performed at <em>meta-train</em> time.</li>
 </ul>
-<p><img alt="rapidvreuse1" src="images/rapidvsreuse1.png"></p>
+<p><img alt="rapidvreuse1" src="./images/rapidvsreuse1.png"></p>
 <p><strong>Observation 1</strong>:</p>
 <ul>
 <li>The validation accuracy with inner loop adaptation (no freezing) and without the inner loop adaptation (freezing) is compared at meta-test time. </li>
 <li>Almost identical performance is observed on MiniImageNet-5way-5shot.</li>
 </ul>
-<p><img alt="rapidvreuse2" src="images/rapidvsreuse2.png"></p>
+<p><img alt="rapidvreuse2" src="./images/rapidvsreuse2.png"></p>
 <p><strong>Observation 2</strong>:</p>
 <ul>
 <li><a href="https://ai.googleblog.com/2017/11/interpreting-deep-neural-networks-with.html">Canonical Correlational Analysis (CCA)</a>[1] similarity is used to compare the changes in representations of all layers.</li>
@@ -79,7 +79,7 @@
 </ul>
 <p><br></p>
 <p><strong>Almost No Inner Loop (ANIL)</strong></p>
-<p><img alt="rapidvreuse3" src="images/rapidvsreuse3.png"></p>
+<p><img alt="rapidvreuse3" src="./images/rapidvsreuse3.png"></p>
 <ul>
 <li>Based on the above observations, the authors remove the inner loop adaptation during <strong>both</strong> meta-train &amp; meta-test time for the body of the network and propose ANIL.</li>
 <li>Inner loop adaptations for the head of the network for task-specific alignment. This is required as for each task, the final output neurons correspond to a different set of classes.</li>
