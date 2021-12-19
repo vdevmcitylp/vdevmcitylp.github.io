@@ -9,52 +9,46 @@
 Here is the complete &lt;a href="https://github.com/vdevmcitylp/scripts"&gt;script&lt;/a&gt;.&lt;/p&gt;
 &lt;p&gt;Read on if you are interested in a step-by-step explanation.&lt;/p&gt;
 &lt;p&gt;Assuming this is the structure of your directory.&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;
-    &lt;span class="n"&gt;media&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;
-        &lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="n"&gt;username&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;/&lt;/span&gt;
-            &lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="k"&gt;Source&lt;/span&gt; &lt;span class="n"&gt;Root&lt;/span&gt; &lt;span class="n"&gt;Folder&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;/&lt;/span&gt;
-                &lt;span class="n"&gt;Folder&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;
-                &lt;span class="n"&gt;Folder&lt;/span&gt; &lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;
-                &lt;span class="p"&gt;...&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;/
+    media/
+        &amp;lt;username&amp;gt;/
+            &amp;lt;Source Root Folder&amp;gt;/
+                Folder 1/
+                Folder 2/
+                ...
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;/
+    media/
+        &amp;lt;username&amp;gt;/
+            &amp;lt;Destination Root Folder&amp;gt;/
+                Folder 1 Backup/
+                Folder 2 Backup/
+                ...
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;
-    &lt;span class="n"&gt;media&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;
-        &lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="n"&gt;username&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;/&lt;/span&gt;
-            &lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="n"&gt;Destination&lt;/span&gt; &lt;span class="n"&gt;Root&lt;/span&gt; &lt;span class="n"&gt;Folder&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;/&lt;/span&gt;
-                &lt;span class="n"&gt;Folder&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt; &lt;span class="n"&gt;Backup&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;
-                &lt;span class="n"&gt;Folder&lt;/span&gt; &lt;span class="mi"&gt;2&lt;/span&gt; &lt;span class="n"&gt;Backup&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;
-                &lt;span class="p"&gt;...&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;source_root=&amp;quot;/media/&amp;lt;your-username&amp;gt;/&amp;lt;your-source-folder-root&amp;gt;&amp;quot;
 
-
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="n"&gt;source_root&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="ss"&gt;&amp;quot;/media/&amp;lt;your-username&amp;gt;/&amp;lt;your-source-folder-root&amp;gt;&amp;quot;&lt;/span&gt;
-
-&lt;span class="n"&gt;destination_root&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="ss"&gt;&amp;quot;/media/&amp;lt;your-username&amp;gt;/&amp;lt;your-external-drive-name&amp;gt;/&amp;lt;your-destination-folder-root&amp;gt;&amp;quot;&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
-
+destination_root=&amp;quot;/media/&amp;lt;your-username&amp;gt;/&amp;lt;your-external-drive-name&amp;gt;/&amp;lt;your-destination-folder-root&amp;gt;&amp;quot;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;&lt;code&gt;source_root&lt;/code&gt; is the root directory at your computer.
 &lt;code&gt;destination_root&lt;/code&gt; is the root directory at the External Drive where you want to back up.&lt;/p&gt;
 &lt;p&gt;The next few lines loop through all the folders that you want to backup.
 Use double quotes ("Folder 1") so that whitespaces don't give you trouble.&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="nv"&gt;folder&lt;/span&gt; &lt;span class="nv"&gt;in&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="s"&gt;Folder 1&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="s"&gt;Folder 2&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="s"&gt;Folder N&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="nv"&gt;folder&lt;/span&gt; &lt;span class="nv"&gt;in&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="s"&gt;Folder 1&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="s"&gt;Folder 2&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="s"&gt;Folder N&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;
 &lt;span class="k"&gt;do&lt;/span&gt;
     &lt;span class="nv"&gt;source_folder&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;$&lt;span class="nv"&gt;source_root&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="mh"&gt;$f&lt;/span&gt;&lt;span class="nv"&gt;older&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;
     &lt;span class="nv"&gt;destination_folder&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mh"&gt;$de&lt;/span&gt;&lt;span class="nv"&gt;stination_root&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="mh"&gt;$f&lt;/span&gt;&lt;span class="nv"&gt;older&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
-
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;This will create a new folder on the External Drive if it doesn't exist.&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="n"&gt;mkdir&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;p&lt;/span&gt; &lt;span class="ss"&gt;&amp;quot;$destination_folder&amp;quot;&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
-
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;mkdir -p &amp;quot;$destination_folder&amp;quot;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;Finally, the core of the script: &lt;code&gt;rsync&lt;/code&gt;&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="n"&gt;rsync&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;rtu&lt;/span&gt; &lt;span class="c1"&gt;--delete &amp;quot;$source_folder&amp;quot; &amp;quot;$destination_folder&amp;quot;&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
-
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;rsync -rtu --delete &amp;quot;$source_folder&amp;quot; &amp;quot;$destination_folder&amp;quot;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;You can go through the &lt;a href="http://manpages.ubuntu.com/manpages/trusty/man1/rsync.1.html"&gt;man-page&lt;/a&gt; of &lt;code&gt;rsync&lt;/code&gt; to customize it according to your requirements.&lt;/p&gt;
 &lt;p&gt;Setup a recurring reminder in your calendar to backup. Connect your external hard drive and &lt;a href="https://askubuntu.com/questions/38661/how-do-i-run-sh-scripts"&gt;run&lt;/a&gt; the script!&lt;/p&gt;</content><category term="posts"></category><category term="scripts"></category></entry><entry><title>Paper Summary - Rapid Learning or Feature Reuse?</title><link href="https://vdevmcitylp.github.io/paper-summary-rapid-learning-or-feature-reuse.html" rel="alternate"></link><published>2019-12-23T11:44:00+05:30</published><updated>2019-12-23T11:44:00+05:30</updated><author><name>Vaasudev Narayanan</name></author><id>tag:vdevmcitylp.github.io,2019-12-23:/paper-summary-rapid-learning-or-feature-reuse.html</id><summary type="html">&lt;p&gt;Rapid Learning or Feature Reuse? Towards Understanding the Effectiveness of MAML (NeurIPS Workshop on Meta Learning 2019)&lt;/p&gt;</summary><content type="html">&lt;p&gt;In this post, we will go through a brief summary of &lt;a href="http://metalearning.ml/2019/papers/metalearn2019-raghu.pdf"&gt;this&lt;/a&gt; paper by Aniruddh Raghu, Maithra Raghu. Samy Bengio &amp;amp; Oriol Vinyals which came out in &lt;a href="http://metalearning.ml/2019/"&gt;MetaLearn 2019&lt;/a&gt; at NeurIPS.&lt;/p&gt;
@@ -207,9 +201,9 @@ $$&lt;/p&gt;
         -\alpha \frac{\partial^2 L_{T_i}(\theta)}{\partial \theta_p \partial \theta_q}, &amp;amp; {p \neq q}
     \end{cases}
 \end{equation}
-$$
+$$&lt;/p&gt;
 &lt;!-- Double Derivative start --&gt;
-&lt;br /&gt;
+&lt;p&gt;&lt;br /&gt;
 Let us calculate the double derivative term $ \frac{\partial^2 L_{T_i}(f_{\theta})}{\partial^2 \theta} $,&lt;/p&gt;
 &lt;p&gt;$$
 \begin{equation} \label{eq10}
@@ -234,7 +228,6 @@ $$&lt;/p&gt;
 \end{equation}
 $$&lt;/p&gt;
 &lt;!-- Double Derivative end --&gt;
-
 &lt;p&gt;&lt;br /&gt;&lt;/p&gt;
 &lt;p&gt;Therefore, using equation \ref{eq5}, \ref{eq8} &amp;amp; \ref{eq12} we can now compute the gradient for the $i^{th}$ task w.r.t. the meta-parameters: $ \frac{\partial L_{T_i}(f_{\theta_i'})}{\partial \theta} $ (equation \ref{eq4})&lt;/p&gt;
 &lt;p&gt;$$

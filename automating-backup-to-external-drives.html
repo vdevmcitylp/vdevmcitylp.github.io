@@ -55,52 +55,46 @@
 Here is the complete <a href="https://github.com/vdevmcitylp/scripts">script</a>.</p>
 <p>Read on if you are interested in a step-by-step explanation.</p>
 <p>Assuming this is the structure of your directory.</p>
-<div class="highlight"><pre><span></span><span class="o">/</span>
-    <span class="n">media</span><span class="o">/</span>
-        <span class="o">&lt;</span><span class="n">username</span><span class="o">&gt;/</span>
-            <span class="o">&lt;</span><span class="k">Source</span> <span class="n">Root</span> <span class="n">Folder</span><span class="o">&gt;/</span>
-                <span class="n">Folder</span> <span class="mi">1</span><span class="o">/</span>
-                <span class="n">Folder</span> <span class="mi">2</span><span class="o">/</span>
-                <span class="p">...</span>
-</pre></div>
+<div class="highlight"><pre><span></span><code>/
+    media/
+        &lt;username&gt;/
+            &lt;Source Root Folder&gt;/
+                Folder 1/
+                Folder 2/
+                ...
+</code></pre></div>
 
+<div class="highlight"><pre><span></span><code>/
+    media/
+        &lt;username&gt;/
+            &lt;Destination Root Folder&gt;/
+                Folder 1 Backup/
+                Folder 2 Backup/
+                ...
+</code></pre></div>
 
-<div class="highlight"><pre><span></span><span class="o">/</span>
-    <span class="n">media</span><span class="o">/</span>
-        <span class="o">&lt;</span><span class="n">username</span><span class="o">&gt;/</span>
-            <span class="o">&lt;</span><span class="n">Destination</span> <span class="n">Root</span> <span class="n">Folder</span><span class="o">&gt;/</span>
-                <span class="n">Folder</span> <span class="mi">1</span> <span class="n">Backup</span><span class="o">/</span>
-                <span class="n">Folder</span> <span class="mi">2</span> <span class="n">Backup</span><span class="o">/</span>
-                <span class="p">...</span>
-</pre></div>
+<div class="highlight"><pre><span></span><code>source_root=&quot;/media/&lt;your-username&gt;/&lt;your-source-folder-root&gt;&quot;
 
-
-<div class="highlight"><pre><span></span><span class="n">source_root</span><span class="o">=</span><span class="ss">&quot;/media/&lt;your-username&gt;/&lt;your-source-folder-root&gt;&quot;</span>
-
-<span class="n">destination_root</span><span class="o">=</span><span class="ss">&quot;/media/&lt;your-username&gt;/&lt;your-external-drive-name&gt;/&lt;your-destination-folder-root&gt;&quot;</span>
-</pre></div>
-
+destination_root=&quot;/media/&lt;your-username&gt;/&lt;your-external-drive-name&gt;/&lt;your-destination-folder-root&gt;&quot;
+</code></pre></div>
 
 <p><code>source_root</code> is the root directory at your computer.
 <code>destination_root</code> is the root directory at the External Drive where you want to back up.</p>
 <p>The next few lines loop through all the folders that you want to backup.
 Use double quotes ("Folder 1") so that whitespaces don't give you trouble.</p>
-<div class="highlight"><pre><span></span><span class="k">for</span> <span class="nv">folder</span> <span class="nv">in</span> <span class="s2">&quot;</span><span class="s">Folder 1</span><span class="s2">&quot;</span> <span class="s2">&quot;</span><span class="s">Folder 2</span><span class="s2">&quot;</span> <span class="s2">&quot;</span><span class="s">Folder N</span><span class="s2">&quot;</span>
+<div class="highlight"><pre><span></span><code><span class="k">for</span> <span class="nv">folder</span> <span class="nv">in</span> <span class="s2">&quot;</span><span class="s">Folder 1</span><span class="s2">&quot;</span> <span class="s2">&quot;</span><span class="s">Folder 2</span><span class="s2">&quot;</span> <span class="s2">&quot;</span><span class="s">Folder N</span><span class="s2">&quot;</span>
 <span class="k">do</span>
     <span class="nv">source_folder</span><span class="o">=</span>$<span class="nv">source_root</span><span class="o">/</span><span class="mh">$f</span><span class="nv">older</span><span class="o">/</span>
     <span class="nv">destination_folder</span><span class="o">=</span><span class="mh">$de</span><span class="nv">stination_root</span><span class="o">/</span><span class="mh">$f</span><span class="nv">older</span><span class="o">/</span>
-</pre></div>
-
+</code></pre></div>
 
 <p>This will create a new folder on the External Drive if it doesn't exist.</p>
-<div class="highlight"><pre><span></span><span class="n">mkdir</span> <span class="o">-</span><span class="n">p</span> <span class="ss">&quot;$destination_folder&quot;</span>
-</pre></div>
-
+<div class="highlight"><pre><span></span><code>mkdir -p &quot;$destination_folder&quot;
+</code></pre></div>
 
 <p>Finally, the core of the script: <code>rsync</code></p>
-<div class="highlight"><pre><span></span><span class="n">rsync</span> <span class="o">-</span><span class="n">rtu</span> <span class="c1">--delete &quot;$source_folder&quot; &quot;$destination_folder&quot;</span>
-</pre></div>
-
+<div class="highlight"><pre><span></span><code>rsync -rtu --delete &quot;$source_folder&quot; &quot;$destination_folder&quot;
+</code></pre></div>
 
 <p>You can go through the <a href="http://manpages.ubuntu.com/manpages/trusty/man1/rsync.1.html">man-page</a> of <code>rsync</code> to customize it according to your requirements.</p>
 <p>Setup a recurring reminder in your calendar to backup. Connect your external hard drive and <a href="https://askubuntu.com/questions/38661/how-do-i-run-sh-scripts">run</a> the script!</p>
@@ -132,7 +126,7 @@ Use double quotes ("Folder 1") so that whitespaces don't give you trouble.</p>
               <li><a href="./pages/publications.html">Publications</a></li>
               <li><a href="./pages/work-experience.html">Work Experience</a></li>
               <li class="nav-header">Links</li>
-              <li><a href="https://drive.google.com/file/d/11wwTyNCs9HJxtCsNlo02yipEyMrr7oW_/view">CV</a></li>
+              <li><a href="https://drive.google.com/file/d/1pr3kPSXaziOdq45O0bSiSXuQ11Ez1bNf/view?usp=sharing">CV</a></li>
               <li><a href="https://scholar.google.co.in/citations?user=ncXa5P0AAAAJ&hl=en">Google Scholar</a></li>
               <li><a href="https://github.com/vdevmcitylp">Github</a></li>
               <li><a href="https://www.linkedin.com/in/vaasudev-narayanan-659b6010b/">LinkedIn</a></li>
