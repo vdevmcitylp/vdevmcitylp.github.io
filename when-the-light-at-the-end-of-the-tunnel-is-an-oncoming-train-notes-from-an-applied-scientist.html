@@ -1,0 +1,258 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="HandheldFriendly" content="True" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="" />
+
+  <link href="https://fonts.googleapis.com/css2?family=Source+Code+Pro:ital,wght@0,400;0,700;1,400&family=Source+Sans+Pro:ital,wght@0,300;0,400;0,700;1,400&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" type="text/css" href="./theme/stylesheet/style.min.css">
+
+
+    <link id="pygments-light-theme" rel="stylesheet" type="text/css"
+          href="./theme/pygments/github.min.css">
+
+
+
+  <link rel="stylesheet" type="text/css" href="./theme/font-awesome/css/fontawesome.css">
+  <link rel="stylesheet" type="text/css" href="./theme/font-awesome/css/brands.css">
+  <link rel="stylesheet" type="text/css" href="./theme/font-awesome/css/solid.css">
+
+  <link rel="stylesheet" type="text/css" href="./static/custom.css">
+
+
+
+  <link href="https://vdevmcitylp.github.io/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Vaasudev's Blog Atom">
+
+
+
+
+
+
+
+
+ 
+
+<meta name="author" content="Vaasudev Narayanan" />
+<meta name="description" content="Lessons learned from two years as an Applied Scientist at Amazon - on anchoring to truth, managing complexity, and staying sane in production" />
+<meta name="keywords" content="career, applied-science, lessons-learned">
+
+
+  <meta property="og:site_name" content="Vaasudev's Blog"/>
+  <meta property="og:title" content="When the Light at the End of the Tunnel is an Oncoming Train: Notes from an Applied Scientist"/>
+  <meta property="og:description" content="Lessons learned from two years as an Applied Scientist at Amazon - on anchoring to truth, managing complexity, and staying sane in production"/>
+  <meta property="og:locale" content="en_US"/>
+  <meta property="og:url" content="./when-the-light-at-the-end-of-the-tunnel-is-an-oncoming-train-notes-from-an-applied-scientist.html"/>
+  <meta property="og:type" content="article"/>
+  <meta property="article:published_time" content="2025-03-15 10:00:00+05:30"/>
+  <meta property="article:modified_time" content="2025-03-15 10:00:00+05:30"/>
+  <meta property="article:author" content="./author/vaasudev-narayanan.html">
+  <meta property="article:section" content="posts"/>
+  <meta property="article:tag" content="career"/>
+  <meta property="article:tag" content="applied-science"/>
+  <meta property="article:tag" content="lessons-learned"/>
+  <meta property="og:image" content="/images/IndiaGatePortrait-square.jpeg">
+
+  <title>Vaasudev's Blog &ndash; When the Light at the End of the Tunnel is an Oncoming Train: Notes from an Applied Scientist</title>
+
+  <!-- MathJax for LaTeX rendering -->
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      extensions: ["tex2jax.js"],
+      jax: ["input/TeX", "output/HTML-CSS"],
+      tex2jax: {
+        inlineMath: [ ['$','$'] ],
+        displayMath: [ ['$$','$$'] ],
+        processEscapes: true
+      },
+      TeX: { 
+        equationNumbers: { autoNumber: "AMS" },
+        extensions: ["AMSmath.js", "AMSsymbols.js"]
+      },
+      "HTML-CSS": { availableFonts: ["TeX"] }
+    });
+  </script>
+  <script type="text/javascript" async
+    src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-MML-AM_CHTML">
+  </script>
+
+
+</head>
+<body class="light-theme">
+
+<aside>
+  <div>
+    <a href="./">
+      <img src="/images/IndiaGatePortrait-square.jpeg" alt="" title="">
+    </a>
+
+    <h1>
+      <a href="./"></a>
+    </h1>
+
+
+
+    <nav>
+      <ul class="list">
+
+
+            <li>
+              <a target="_self"
+                 href="./pages/about.html#about">
+                About Me
+              </a>
+            </li>
+            <li>
+              <a target="_self"
+                 href="./pages/publications.html#publications">
+                Publications
+              </a>
+            </li>
+            <li>
+              <a target="_self"
+                 href="./pages/work-experience.html#work-experience">
+                Work Experience
+              </a>
+            </li>
+
+          <li>
+            <a target="_self" href="/" >Blog</a>
+          </li>
+          <li>
+            <a target="_self" href="https://drive.google.com/file/d/1pYAOyn5U1zIpv7-0Pxp9r2HSPp4K3mBA/view?usp=sharing" >CV</a>
+          </li>
+          <li>
+            <a target="_self" href="https://scholar.google.co.in/citations?user=ncXa5P0AAAAJ&hl=en" >Google Scholar</a>
+          </li>
+      </ul>
+    </nav>
+
+    <ul class="social">
+      <li>
+        <a class="sc-github"
+           href="https://github.com/vdevmcitylp"
+           target="_blank">
+          <i class="fa-brands fa-github"></i>
+        </a>
+      </li>
+      <li>
+        <a class="sc-linkedin"
+           href="https://www.linkedin.com/in/vaasudev-narayanan-659b6010b/"
+           target="_blank">
+          <i class="fa-brands fa-linkedin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="sc-twitter"
+           href="https://x.com/vaasudev96"
+           target="_blank">
+          <i class="fa-brands fa-twitter"></i>
+        </a>
+      </li>
+    </ul>
+  </div>
+
+</aside>
+  <main>
+
+
+<article class="single">
+  <header>
+      
+    <h1 id="when-the-light-at-the-end-of-the-tunnel-is-an-oncoming-train-notes-from-an-applied-scientist">When the Light at the End of the Tunnel is an Oncoming Train: Notes from an Applied Scientist</h1>
+    <p>
+      Posted on Sat 15 March 2025 in <a href="./category/posts.html">posts</a>
+
+    </p>
+  </header>
+
+
+  <div>
+    <p align="center">
+    <img src="./images/oncoming-train.png" alt="Oncoming Train" style="max-width: 50%; height: auto;" />
+</p>
+
+<p>Hi! I've been working as an Applied Scientist in the Last Mile team at Amazon for the past two years. I'm passionate about building algorithms that drive real-world impact and equally bullish on not breaking stuff.</p>
+<p>A lot of my work has been in complex multi-stage, multi-stakeholder systems. The problems are high-impact, messy and ambiguous. At times, it has felt like flying but through a fog with just 5 metres of visibility.</p>
+<p>In this post, I want to share some of the lessons I've learned along the way, the kind of things I wish I'd known when I was just starting out.</p>
+<p><strong>Disclaimer:</strong> All opinions are my own and not my employer's.</p>
+<h2>Anchoring to the Truth</h2>
+<p>Early in my career, if something failed, my first instinct was panic. I would scramble to fix it before informing my manager or stakeholders. Sometimes it was my fault (like the cardinal sin of writing '=' instead of '==' in an if-else). Other times, there were problems in other dependent systems which were completely out of my control.</p>
+<p>This worked for a while, I thought I was maintaining my reputation of always doing faultless work. But after 8 weekends in a row spent firefighting, I realized something was off (really took me that long, please don't judge). With each passing weekend, my productivity and my mental peace took a hit. In my quest for perfection, two things were happening:</p>
+<ol>
+<li>I was setting unrealistic time estimates</li>
+<li>Systemic problems were flying under the radar because my "brilliance" was covering them up.</li>
+</ol>
+<p>Of course, my manager had no visibility of my weekend shenanigans and from their perspective, work that actually took 7 days, was getting wrapped up in 5.</p>
+<p>Eventually, I started being transparent and upfront about everything to my manager — what was breaking, where the dependencies were and what my real timelines looked like. We were able to re-calibrate my work, adjust timelines and even push back with stakeholders as needed. (At that point, I didn't even know pushing back was an option.)</p>
+<p>I was back to working only on weekdays and happier. It made me realize the only way to stay sane is by anchoring to the truth, it really does set you free.</p>
+<h2>Ask the Oracle</h2>
+<p>When you have bandwidth for only N tasks at a time and there are N+10 things to get done, hyper-prioritization is key. As an individual contributor, it's easy to get tunnel vision because most of your focus is on implementation. Your manager, however, has more context and better visibility into what truly matters for the business.</p>
+<p><strong>Treat your manager as an oracle and ask them to rank stuff.</strong></p>
+<p>That way, even if something fails or timelines slip, you're aligned on what truly matters. It takes the pressure off trying to do everything at once and helps you avoid spreading yourself too thin. Much like a CPU, while you can learn how to "pipeline" tasks, you can focus on only one task at a time. During production season, it'll keep you sane and stakeholders happy. As a scientist, I also feel it's important to work with your manager to stitch together a few weeks where no one bothers you, so you can explore deeply. I'm still learning how to do this well.</p>
+<h2>Think Systems, Not Just Models</h2>
+<p>A model is never just a model, it's part of an ecosystem.</p>
+<p>Improving precision-recall is nice, but if it doesn't move metrics on-ground, the model adds no real value. It helps to understand not just the algorithm but the system it lives in.</p>
+<p>Take timelines for example. If training your ML model takes 2 days, but production deployment takes 7 due to dependencies you don't control, the true estimate is 9 days, not 2. Unless you account for the entire system, you'll always be chasing unrealistic deadlines.</p>
+<p>I've also learnt not to spend weeks polishing every edge case before launching even once in production. In one project, we discovered 30% of the issues surfaced only after we did our first production ingestion. Some had nothing to do with ML at all, just downstream systems not being ready.</p>
+<p>Beta testing reduced this, but given the complexity of systems, it's often too expensive and time-consuming to replicate everything exactly. So Beta and Prod were never identical. Testing end-to-end system behaviour early on realistic samples has helped avoid surprises. Launch and iterate.</p>
+<p>Finally, focus on heavy hitters. On the eve of a code freeze deadline, we discovered that our model was failing for certain inputs in our offline testing. We obviously did not have time to re-train. Instead, we blocked those cases to ensure no regressions and deployed in production. Not perfect, but it worked and unblocked the business.</p>
+<p><strong>When you can't solve everything, solve what matters most.</strong></p>
+<h2>Write Less Code</h2>
+<p>Every line of code that you write needs to be reviewed, tested, and waiting to betray you in production on some obscure edge case. The less you write, the less there is to maintain, debug, or break.</p>
+<p>Writing less doesn't mean cutting corners, it often means more work. It means reusing existing code, building good abstractions, and resisting the urge to duplicate blocks just because refactoring feels like a hassle. You won't always have the luxury of perfect cleanup while a project is moving fast, but make it a habit to revisit and tidy things up. Your future self (and your teammates) will thank you when the next project builds on top of your code.</p>
+<p>At scale, the abstraction-inheritance mindset becomes even more important. Strive for model parity across regions, but accept that ML models don't always capture the long tail. Sometimes you'll need geography-specific tweaks. Planning with reuse and expansion in mind from the start makes those exceptions easier to handle.</p>
+<h2>Ugly Code &gt; Missed Deadlines</h2>
+<p>I love writing code. I love writing code for the sake of writing code. But a tough pill to swallow for nerds like me: no one cares about how elegant your code is if it takes weeks to deliver when the business needs it yesterday. Slightly messy code that works is infinitely better than beautiful code that delays timelines. I'm not suggesting that we abandon principles, but it is important to remain aware of what keeps the system afloat. Now, if years of spaghetti code is dragging things down, call it out and make sure the cost of fixing it is accounted for.</p>
+<p>Early on, when I gave timelines, I'd be hyper-optimistic and leave no room for things going wrong. My "buffer" was basically the weekend. Unsurprisingly, that wasn't sustainable. What's helped is building in realistic estimates and asking myself: what's the absolute minimum version of success here? Sometimes that's a working prototype instead of a polished system. That shift alone has saved me a lot of stress and cut down on unnecessary perfectionism.</p>
+<h2>Communicating in a Multi-Stakeholder World</h2>
+<h3>Write It Down, Once</h3>
+<p>You simply cannot verbally explain the same thing over and over. Like a good stock investment, your work should keep adding value even while you sleep and the way to do that is through documentation. A clear doc with examples goes a long way. Examples, in particular, hit like a truck.</p>
+<p>Writing things down takes time you could spend improving the solution, but in a multi-stakeholder world where ambiguity is high, transparency comes first. A solid doc helps everyone up and down the chain focus on what really matters. I've lost count of the times a well-chosen example turned a heated debate into alignment. There will still be disagreements, but grounding them in the end goal clears the fog fast.</p>
+<h3>Small Rooms, Big Wins</h3>
+<p>In multi-stakeholder projects, people are stretched across multiple threads. They don't always have time to dive into all the details, and percentages or summary stats can mislead when ambiguity is high. I've found it helps to first align in smaller groups before taking things to a broader forum. It avoids miscommunication, reduces delays, and makes conversations more objective.</p>
+<p>And through all of this, I've learned that business problems will come and go, but the relationships you build with your co-workers are permanent. No one wants to work with someone unpleasant, so be nice!</p>
+<hr>
+<h2>Acknowledgments</h2>
+<p>Grateful to Piyush Joshi and Minaxi Goel for helping me when I was spiralling. Shoutouts to Sai Srinivas, Hari Chandana, Pranoy, and Nitin for keeping me sane. And of course, my family, without their support, none of this would have been possible.</p>
+<hr>
+<p><em>Originally published on <a href="https://medium.com/@vaasudev96/when-the-light-at-the-end-of-the-tunnel-is-an-oncoming-train-notes-from-an-applied-scientist-1f8cfcc71cf6">Medium</a></em></p>
+  </div>
+  <div class="tag-cloud">
+    <p>
+      <a href="./tag/career">career</a>
+      <a href="./tag/applied-science">applied-science</a>
+      <a href="./tag/lessons-learned">lessons-learned</a>
+    </p>
+  </div>
+
+
+
+
+
+
+
+</article>
+
+<footer>
+<p>&copy;  </p>
+<p>
+Built with <a href="http://getpelican.com" target="_blank">Pelican</a> using <a href="http://bit.ly/flex-pelican" target="_blank">Flex</a> theme
+</p></footer>  </main>
+
+<script type="application/ld+json">
+{
+  "@context" : "http://schema.org",
+  "@type" : "Blog",
+  "name": " Vaasudev's Blog ",
+  "url" : ".",
+  "image": "/images/IndiaGatePortrait-square.jpeg",
+  "description": ""
+}
+</script>
+</body>
+</html>

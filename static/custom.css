@@ -38,3 +38,8 @@ main article > div {
 main article a.btn {
     display: none !important;
 }
+
+/* Hide Disqus reactions */
+#disqus_thread .post-reactions {
+    display: none !important;
+}
