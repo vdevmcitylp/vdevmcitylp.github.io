@@ -1,0 +1,40 @@
+/* Change main text color from red to dark gray */
+main article h2 a {
+    color: #2c3e50 !important;
+}
+
+main article h2 a:hover {
+    color: #34495e !important;
+}
+
+/* Change metadata links color */
+main article .post-info a {
+    color: #2c3e50 !important;
+}
+
+main article .post-info a:hover {
+    color: #34495e !important;
+}
+
+/* Change all article links to more prominent blue */
+main article a {
+    color: #2980b9 !important;
+}
+
+main article a:hover {
+    color: #3498db !important;
+}
+
+/* Hide continue reading button and surrounding elements */
+main article > div > br {
+    display: none !important;
+}
+
+main article > div {
+    margin-bottom: 0 !important;
+    padding-bottom: 0 !important;
+}
+
+main article a.btn {
+    display: none !important;
+}
